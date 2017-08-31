@@ -16,3 +16,7 @@ ECOMMERCE_MEMCACHE: ['edx.devstack.memcached:11211']
 ECOMMERCE_ECOMMERCE_URL_ROOT: 'http://localhost:18130'
 
 edx_django_service_is_devstack: true
+
+# NOTE: The creation of demo data requires database access,
+# which we don't have when making new images.
+ecommerce_create_demo_data: false
