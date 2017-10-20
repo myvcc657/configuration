@@ -135,9 +135,32 @@
     - install:jenkins-configuration
     - jenkins:local-dev
 
+- name: Delete any existing init.groovy.d files
+  file:
+    path: "{{ jenkins_common_home }}/init.groovy.d/*"
+    state: absent
+  become: true
+  become_user: '{{ jenkins_common_user }}'
+  tags:
+    - install
+    - install:base
+    - install:jenkins-configuration
+    - jenkins:local-dev
+
 - name: Copy init scripts into init.groovy.d
   command: 'cp {{ jenkins_common_git_home }}/jenkins-configuration/{{ jenkins_common_configuration_src_path }}/{{ item }} {{ jenkins_common_home }}/init.groovy.d/'
   with_items: '{{ jenkins_common_configuration_scripts }}'
+  become: true
+  become_user: '{{ jenkins_common_user }}'
+  tags:
+    - install
+    - install:base
+    - install:jenkins-configuration
+
+- name: For local dev, copy appropriate scripts to init.groovy.d
+  command: 'cp src/main/groovy/{{ item }} {{ jenkins_common_home }}/init.groovy.d/'
+  with_items: '{{ jenkins_common_configuration_scripts }}'
+  when: 'item != "4configureGHOAuth.groovy"'
   become: true
   become_user: '{{ jenkins_common_user }}'
   tags:
