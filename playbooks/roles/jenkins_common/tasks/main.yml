@@ -248,20 +248,10 @@
     - install:jenkins-configuration
     - jenkins:local-dev
 
-# - name: Delete plugins dir
-#   file:
-#     path: "{{ jenkins_common_config_path }}/plugins/*"
-#     state: absent
-#   become: true
-#   become_user: 'root'
-#   tags:
-#     - install
-#     - install:base
-#     - install:jenkins-configuration
-#     - jenkins:local-dev
-
-- name: remove plugins
-  shell: 'rm -r {{ jenkins_common_home }}/plugins/*'
+- name: Delete plugins dir
+  file:
+    path: "{{ jenkins_common_home }}/plugins/*"
+    state: absent
   become: true
   become_user: 'root'
   tags:
