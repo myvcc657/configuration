@@ -261,7 +261,7 @@
 #     - jenkins:local-dev
 
 - name: remove plugins
-  shell: 'rm -f {{ jenkins_common_config_path }}/plugins/*'
+  shell: 'rm -r {{ jenkins_common_config_path }}/plugins/*'
   become: true
   become_user: 'root'
   tags:
